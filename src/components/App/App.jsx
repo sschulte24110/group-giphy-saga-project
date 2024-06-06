@@ -1,22 +1,19 @@
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
+import Search from '../Search/Search';
 
 function App() {
   return (
     <div>
-      <h1>Giphy Search!</h1>
       <Router>
-        <Route
-          exact
-          path='/'
-        >
+        {/* <Route exact path='/'>
           <Trending />
-        </Route>
+        </Route> */}
         <Route path='/search'>
           <Search />
         </Route>
-        <Route>
+        {/* <Route>
           <Favorites path='/favorites' />
-        </Route>
+        </Route> */}
       </Router>
     </div>
   );
