@@ -1,4 +1,7 @@
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
+import Trending from '../Trending/Trending';
+import Favorite from '../Favorites/Favorites';
+import Search from '../Search/Search';
 
 function App() {
   return (
@@ -15,7 +18,7 @@ function App() {
           <Search />
         </Route>
         <Route>
-          <Favorites path='/favorites' />
+          <Favorite path='/favorites' />
         </Route>
       </Router>
     </div>
