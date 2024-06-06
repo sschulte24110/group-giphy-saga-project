@@ -25,23 +25,6 @@ INSERT INTO "categories"
 --    One favorite has one category.
 --    One category can be had by many favorites.
 
--- Amber's DB
-
-CREATE TABLE "categories" (
-  "id" SERIAL PRIMARY KEY,
-  "name" VARCHAR (100) NOT NULL
-);
-
--- Default categories. You may change these. 🙂
-INSERT INTO "categories"
-  ("name")
-  VALUES
-  ('wild'),
-  ('uproarious'),
-  ('poignant'),
-  ('felicitous'),
-  ('whimsical');
-  
 CREATE TABLE "favorites" (
 	"id" SERIAL PRIMARY KEY,
 	"category_id" INT REFERENCES "categories",
