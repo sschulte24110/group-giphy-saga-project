@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -15,12 +15,18 @@ export default function Favorites() {
     const dispatch = useDispatch();
     const favorites = useSelector(store => store.favorites);
     const categories = useSelector(store => store.categories);
+    const [selectCategory, setSelectCategory] = useState({});
     console.log(favorites);
 
     useEffect(() => {
         dispatch({ type: 'FETCH_FAVORITES' });
         dispatch({ type: 'FETCH_CATEGORIES' })
     }, []);
+
+    const handleChange = (event) => {
+        console.log('change from dropdown', event.target.value);
+        setSelectCategory(event.target.value);
+    }
 
     return (
         <>
@@ -42,12 +48,12 @@ export default function Favorites() {
                     <Select labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         placeholder='Category'
-                        // value={age}
+                        value={selectCategory}
                         label="Category"
-                        // onChange={handleChange}
+                        onChange={handleChange}
                         >
                         {categories.map(category => (
-                            <MenuItem>{category.name}</MenuItem>
+                            <MenuItem key={category.id} value={category}>{category.name}</MenuItem>
                         ))}
                     </Select>
                     </div>
