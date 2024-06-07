@@ -5,15 +5,15 @@ function App() {
   return (
     <div>
       <Router>
-        {/* <Route exact path='/'>
+        <Route exact path='/'>
           <Trending />
-        </Route> */}
+        </Route>
         <Route path='/search'>
           <Search />
         </Route>
-        {/* <Route>
+        <Route>
           <Favorites path='/favorites' />
-        </Route> */}
+        </Route>
       </Router>
     </div>
   );

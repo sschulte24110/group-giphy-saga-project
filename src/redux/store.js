@@ -7,6 +7,7 @@ import axios from 'axios';
 function* rootSaga() {
   yield takeLeading('FETCH_GIFS', fetchGifsSaga);
   yield takeLeading('ADD_FAVORITE', addFavoriteSaga);
+  yield takeLeading('DELETE_FAVORITE', deleteFavoriteSaga);
 }
 
 const sagaMiddleware = createSagaMiddleware();
@@ -33,6 +34,16 @@ function* addFavoriteSaga(action) {
   }
 }
 
+function* deleteFavoriteSaga(action) {
+  try {
+    yield axios.delete(`/api/favorites/${action.payload}`);
+    yield put({ type: 'FETCH_FAVORITES'});
+  } catch (error) {
+    alert(`Error deleting Favorite`);
+    console.error(error);
+  }
+}
+
 const trending = (state = [], action) => {
   return state;
 };
@@ -41,6 +52,8 @@ const trending = (state = [], action) => {
 const favorites = (state = [], action) => {
   if (action.payload === 'ADD_FAVORITE') {
     return [...state, action.payload]
+  } if (action.payload === 'DELETE_FAVORITE') {
+    return state.filter((favorite) => favorite.id !=action.payload.id);
   }
   return state;
 };
