@@ -4,15 +4,22 @@ import { takeLeading, put } from 'redux-saga/effects';
 import logger from 'redux-logger';
 import axios from 'axios';
 
+
+
+
+
+
+const sagaMiddleware = createSagaMiddleware();
+
 function* rootSaga() {
-  yield takeLeading('FETCH_GIFS', fetchGifsSaga);
+  yield takeLeading('FETCH_FAVORITES', fetchFavorites);
+  yield takeLeading('FETCH_CATEGORIES', fetchCategories);
+   yield takeLeading('FETCH_GIFS', fetchGifsSaga);
   yield takeLeading('ADD_FAVORITE', addFavoriteSaga);
   yield takeLeading('DELETE_FAVORITE', deleteFavoriteSaga);
 }
 
-const sagaMiddleware = createSagaMiddleware();
-
-function* fetchGifsSaga(action) {
+  function* fetchGifsSaga(action) {
   try{
     const response = yield axios.get(`api/search/${action.payload}`);
     yield put({ type: 'SET_GIFS', payload: response.data})
@@ -20,10 +27,7 @@ function* fetchGifsSaga(action) {
     console.error(error);
   }
 }
-
-// Need to check with Amber's work to see if this will be correct.
-// Also need to see if payloads are correct
-// We might need to add a category_id??
+  
 function* addFavoriteSaga(action) {
   try {
     yield axios.post('api/favorites', { gif_name: action.payload, gif_url: action.payload});
@@ -34,7 +38,7 @@ function* addFavoriteSaga(action) {
   }
 }
 
-function* deleteFavoriteSaga(action) {
+  function* deleteFavoriteSaga(action) {
   try {
     yield axios.delete(`/api/favorites/${action.payload}`);
     yield put({ type: 'FETCH_FAVORITES'});
@@ -42,6 +46,35 @@ function* deleteFavoriteSaga(action) {
     alert(`Error deleting Favorite`);
     console.error(error);
   }
+  
+function* fetchFavorites() {
+  try {
+    const response = yield axios.get('/api/favorites');
+    console.log('fetch favorites data', response.data);
+    yield put({ type: 'SET_FAVORITES', payload: response.data });
+  } catch (err) {
+    alert('Error fetching favorites');
+    console.error(err);
+  }
+}
+
+function* fetchCategories() {
+  try {
+    const response = yield axios.get('/api/categories');
+    console.log('fetch categories data', response.data);
+    yield put({ type: 'SET_CATEGORIES', payload: response.data });
+  } catch (err) {
+    alert('Error fetching categories');
+    console.error(err);
+  }
+}
+
+const categories = (state = [], action) => {
+  if (action.type === 'SET_CATEGORIES') {
+    return action.payload;
+  }
+  return state;
+
 }
 
 const trending = (state = [], action) => {
@@ -54,6 +87,8 @@ const favorites = (state = [], action) => {
     return [...state, action.payload]
   } if (action.payload === 'DELETE_FAVORITE') {
     return state.filter((favorite) => favorite.id !=action.payload.id);
+  if (action.type === 'SET_FAVORITES') {
+    return action.payload;
   }
   return state;
 };
@@ -70,6 +105,7 @@ const store = createStore(
     trending,
     favorites,
     search,
+    categories
   }),
   applyMiddleware(sagaMiddleware, logger)
 );
