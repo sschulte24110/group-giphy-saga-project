@@ -3,12 +3,19 @@ import Trending from '../Trending/Trending';
 import Favorite from '../Favorites/Favorites';
 import Search from '../Search/Search';
 
+import Search from '../Search/Search';
+
+import Favorites from '../Favorites/Favorites';
+import "./app.css";
+
 function App() {
   return (
     <div>
-      <h1>Giphy Search!</h1>
       <Router>
-        <Route
+
+
+
+        {/* <Route
           exact
           path='/'
         >
@@ -16,9 +23,9 @@ function App() {
         </Route>
         <Route path='/search'>
           <Search />
-        </Route>
-        <Route>
-          <Favorite path='/favorites' />
+        </Route> */}
+        <Route exact path='/favorites'>
+          <Favorites />
         </Route>
       </Router>
     </div>
