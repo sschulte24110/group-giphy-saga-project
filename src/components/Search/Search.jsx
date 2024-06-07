@@ -8,7 +8,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -24,9 +23,11 @@ export default function Search() {
     setSearchInput(event.target.value);
   };
 
-  const favoriteGif = (gif_url) => {
-    dispatch({ type: 'ADD_FAVORITE', payload: gif_url})
+  const favoriteGif = (gifInfo) => {
+    dispatch({ type: 'ADD_FAVORITE', payload: {gif_name: gifInfo.title, gif_url: gifInfo.images.original.url }})
+    console.log('gif data', gifInfo);
   }
+
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function Search() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button onClick={() => {favoriteGif(gif.images.original.url)}} size='small'>Favorite</Button>
+            <Button onClick={() => {favoriteGif(gif)}} size='small'>Favorite</Button>
           </CardActions>
         </Card>
       ))}
