@@ -15,11 +15,6 @@ export default function Search() {
   let [searchInput, setSearchInput] = useState('');
   const gifReturn = useSelector((store) => store.search);
 
-  // Do I need this
-  useEffect(() => {
-    dispatch({ type: 'FETCH_GIFS' });
-  }, []);
-
   const searchGifs = (event) => {
     dispatch({ type: 'FETCH_GIFS', payload: searchInput });
     setSearchInput('');
