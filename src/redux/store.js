@@ -56,6 +56,7 @@ function* deleteFavoriteSaga(action) {
     console.error(error);
   }
 }
+
 function* fetchFavorites() {
   try {
     const response = yield axios.get('/api/favorites');
@@ -106,7 +107,7 @@ const favorites = (state = [], action) => {
     return action.payload;
   }
   return state;
-};
+}
 
 const search = (state = [], action) => {
   if (action.type === 'SET_GIFS') {
