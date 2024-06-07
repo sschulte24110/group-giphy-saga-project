@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
+import Container from '@mui/material/Container';
 import FavoritesItem from '../FavoritesItem/FavoritesItem';
 
 export default function Favorites() {
@@ -14,12 +15,15 @@ export default function Favorites() {
     }, []);
 
     return (
-        <>
+      <Container>
         <h2>Favorite GIFs</h2>
-        {favorites.map(favorite => (
-            <FavoritesItem key={favorite.id} favorite={favorite} />
+        {favorites.map((favorite) => (
+          <FavoritesItem
+            key={favorite.id}
+            favorite={favorite}
+          />
         ))}
-        </>
+      </Container>
     );
 }
 
