@@ -4,7 +4,7 @@ const router = express.Router();
 const axios = require('axios');
 
  router.get('/:search', (req, res) => {
-  const GIPHY_API_KEY = process.env.GIPHY_API_KEY2;
+  const GIPHY_API_KEY = process.env.GIPHY_API_KEY;
   console.log(GIPHY_API_KEY);
   const searchQuery = req.params.search;
   console.log(searchQuery);
