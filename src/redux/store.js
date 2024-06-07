@@ -21,6 +21,8 @@ function* fetchGifsSaga(action) {
 }
 
 // Need to check with Amber's work to see if this will be correct.
+// Also need to see if payloads are correct
+// We might need to add a category_id??
 function* addFavoriteSaga(action) {
   try {
     yield axios.post('api/favorites', { gif_name: action.payload, gif_url: action.payload});
