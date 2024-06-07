@@ -42,19 +42,8 @@ export default function Search() {
         <button type='submit'>Search</button>
       </form>
       <h4>Giphy Search</h4>
-
       {gifReturn.map((gif) => (
-        <div>
-          <h6>{gif.title}</h6>
-          <h6>{gif.url}</h6>
-          <img src={gif.images.original.url} />
-          <button onClick={() => {favoriteGif(gif.images.original.url)}} >Favorite</button>
-        </div>
-      ))}
-
-      {/* {gifReturn.map((gif) => (
-        <Grid>
-        <Card sx={{ maxWidth: 345}}>
+        <Card key={gif.id} sx={{ width: 300, height: 350}} id='card'>
           <CardMedia
           component='img'
           height='200'
@@ -67,11 +56,10 @@ export default function Search() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size='small'>Favorite</Button>
+            <Button onClick={() => {favoriteGif(gif.images.original.url)}} size='small'>Favorite</Button>
           </CardActions>
         </Card>
-        </Grid>
-      ))} */}
+      ))}
     </>
   );
 }
