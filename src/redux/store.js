@@ -36,10 +36,12 @@ function* fetchGifsSaga(action) {
 
 function* addFavoriteSaga(action) {
   try {
+
     yield axios.post('api/favorites', {
       gif_name: action.payload.gif_name,
       gif_url: action.payload.gif_url,
     });
+
     yield put({ type: 'FETCH_FAVORITES' });
   } catch (error) {
     alert(`Error adding Favorite`);

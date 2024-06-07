@@ -8,18 +8,18 @@ export default function TrendingGifCard() {
   return (
     <>
       {trending.map((gif, i) => (
-        <Grid xs={3}>
-          <Card
-            key={i}
-            sx={{ maxWidth: '300px' }}
-          >
-            <CardMedia
-              component='img'
-              image={gif.images.original.url}
-              alt={gif.title}
-            />
-          </Card>
-        </Grid>
+        // <Grid xs={3}>
+        <Card
+          key={i}
+          //   sx={{ maxHeight: '200px' }}
+        >
+          <CardMedia
+            component='img'
+            image={gif.images.original.url}
+            alt={gif.title}
+          />
+        </Card>
+        // </Grid>
       ))}
     </>
   );
