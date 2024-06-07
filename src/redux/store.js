@@ -13,6 +13,7 @@ function* rootSaga() {
   yield takeLeading('ADD_FAVORITE', addFavoriteSaga);
   yield takeLeading('DELETE_FAVORITE', deleteFavoriteSaga);
   yield takeLeading('GET_TRENDING', getTrending);
+  yield takeLeading('SET_CATEGORY', setCategory);
 }
 
 function* getTrending(action) {
@@ -20,6 +21,17 @@ function* getTrending(action) {
     const result = yield axios.get('/api/trending');
     console.log(result);
     yield put({ type: 'SET_TRENDING', payload: result.data });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function* setCategory(action) {
+  try {
+    yield axios.put(`/api/favorites/${action.payload.id}`, {
+      category_id: action.payload.category_id,
+    });
+    yield put({ type: 'FETCH_FAVORITES' });
   } catch (err) {
     console.error(err);
   }

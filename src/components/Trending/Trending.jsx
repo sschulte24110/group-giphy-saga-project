@@ -7,11 +7,12 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';
+import { useState } from 'react';
 
 export default function Trending() {
   const trending = useSelector((store) => store.trending);
   const dispatch = useDispatch();
-
+  const [disableBtn, setDisableBtn] = useState('');
   useEffect(() => {
     dispatch({ type: 'GET_TRENDING' });
   }, []);
@@ -50,7 +51,9 @@ export default function Trending() {
                 position='top'
                 actionIcon={
                   <IconButton
-                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.54)',
+                    }}
                     onClick={(e) => {
                       e.target.style = 'color:yellow';
                       dispatch({

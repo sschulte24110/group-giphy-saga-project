@@ -29,7 +29,7 @@
     "vitest": "^1.1.0"
   },
   "scripts": {
-    "start": "node server/server.js | vite",
+    "start": "node server/server.js | vite --host",
     "client": "vite",
     "server": "nodemon --watch server server/server.js",
     "test": "vitest",
