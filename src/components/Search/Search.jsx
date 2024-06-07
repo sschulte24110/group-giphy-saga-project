@@ -11,44 +11,52 @@ import Grid from '@mui/material/Grid';
 
 export default function Search() {
   const dispatch = useDispatch();
-  let [search, setSearch] = useState('');
+  let [searchInput, setSearchInput] = useState('');
   const gifReturn = useSelector((store) => store.search);
 
+  // Do I need this
   useEffect(() => {
-    dispatch({ type: 'FETCH_SEARCH' });
+    dispatch({ type: 'FETCH_GIFS' });
   }, []);
 
-  const searchQuery = (event) => {
-    dispatch({ type: 'FETCH_SEARCH', payload: search });
-    setSearch('');
+  const searchGifs = (event) => {
+    dispatch({ type: 'FETCH_GIFS', payload: searchInput });
+    setSearchInput('');
   };
+  
   const handleSearch = (event) => {
-    setSearch(event.target.value);
+    setSearchInput(event.target.value);
   };
+
+  const favoriteGif = (gif_url) => {
+    dispatch({ type: 'ADD_FAVORITE', payload: gif_url})
+  }
+
   return (
     <>
       <h1>Search Page</h1>
       <h3>Search:</h3>
-      <form onSubmit={(event) => searchQuery(event)}>
+      <form onSubmit={(event) => searchGifs(event)}>
         <input
           type='text'
-          placeholder='Search'
-          value={search}
+          placeholder='Search Gifs...'
+          value={searchInput}
           onChange={handleSearch}
         />
         <button type='submit'>Search</button>
       </form>
       <h4>Giphy Search</h4>
 
-      {/* {gifReturn.map((gif) => (
+      {gifReturn.map((gif) => (
         <div>
           <h6>{gif.title}</h6>
           <h6>{gif.url}</h6>
           <img src={gif.images.original.url} />
+          <button onClick={() => {favoriteGif(gif.images.original.url)}} >Favorite</button>
         </div>
-      ))} */}
+      ))}
 
-      {gifReturn.map((gif) => (
+      {/* {gifReturn.map((gif) => (
         <Grid>
         <Card sx={{ maxWidth: 345}}>
           <CardMedia
@@ -67,7 +75,7 @@ export default function Search() {
           </CardActions>
         </Card>
         </Grid>
-      ))}
+      ))} */}
     </>
   );
 }

@@ -23,7 +23,7 @@ function* fetchGifsSaga(action) {
 // Need to check with Amber's work to see if this will be correct.
 function* addFavoriteSaga(action) {
   try {
-    yield axios.post('api/favorites', { url: action.payload});
+    yield axios.post('api/favorites', { gif_name: action.payload, gif_url: action.payload});
     yield put({ type: 'FETCH_FAVORITES' });
   } catch (error) {
     alert(`Error adding Favorite`);
