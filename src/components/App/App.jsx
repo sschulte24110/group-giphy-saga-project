@@ -1,21 +1,14 @@
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
 import Trending from '../Trending/Trending';
-import Favorite from '../Favorites/Favorites';
 import Search from '../Search/Search';
-
-import Search from '../Search/Search';
-
 import Favorites from '../Favorites/Favorites';
-import "./app.css";
+import './app.css';
 
 function App() {
   return (
     <div>
       <Router>
-
-
-
-        {/* <Route
+        <Route
           exact
           path='/'
         >
@@ -23,8 +16,11 @@ function App() {
         </Route>
         <Route path='/search'>
           <Search />
-        </Route> */}
-        <Route exact path='/favorites'>
+        </Route>
+        <Route
+          exact
+          path='/favorites'
+        >
           <Favorites />
         </Route>
       </Router>
