@@ -4,13 +4,12 @@ import { takeLeading, put } from 'redux-saga/effects';
 import logger from 'redux-logger';
 import axios from 'axios';
 
-
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
   yield takeLeading('FETCH_FAVORITES', fetchFavorites);
   yield takeLeading('FETCH_CATEGORIES', fetchCategories);
-   yield takeLeading('FETCH_GIFS', fetchGifsSaga);
+  yield takeLeading('FETCH_GIFS', fetchGifsSaga);
   yield takeLeading('ADD_FAVORITE', addFavoriteSaga);
   yield takeLeading('DELETE_FAVORITE', deleteFavoriteSaga);
   yield takeLeading('GET_TRENDING', getTrending);
@@ -26,18 +25,21 @@ function* getTrending(action) {
   }
 }
 
-  function* fetchGifsSaga(action) {
-  try{
+function* fetchGifsSaga(action) {
+  try {
     const response = yield axios.get(`api/search/${action.payload}`);
-    yield put({ type: 'SET_GIFS', payload: response.data})
+    yield put({ type: 'SET_GIFS', payload: response.data });
   } catch (error) {
     console.error(error);
   }
 }
-  
+
 function* addFavoriteSaga(action) {
   try {
-    yield axios.post('api/favorites', { gif_name: action.payload, gif_url: action.payload});
+    yield axios.post('api/favorites', {
+      gif_name: action.payload,
+      gif_url: action.payload,
+    });
     yield put({ type: 'FETCH_FAVORITES' });
   } catch (error) {
     alert(`Error adding Favorite`);
@@ -45,16 +47,16 @@ function* addFavoriteSaga(action) {
   }
 }
 
-  function* deleteFavoriteSaga(action) {
+function* deleteFavoriteSaga(action) {
   try {
     yield axios.delete(`/api/favorites/${action.payload}`);
-    yield put({ type: 'FETCH_FAVORITES'});
+    yield put({ type: 'FETCH_FAVORITES' });
   } catch (error) {
     alert(`Error deleting Favorite`);
     console.error(error);
   }
 }
-  
+
 function* fetchFavorites() {
   try {
     const response = yield axios.get('/api/favorites');
@@ -82,8 +84,7 @@ const categories = (state = [], action) => {
     return action.payload;
   }
   return state;
-
-}
+};
 
 const trending = (state = [], action) => {
   switch (action.type) {
@@ -97,14 +98,16 @@ const trending = (state = [], action) => {
 // Did not add FETCH_FAVORITES since I did not know what Amber had completed.
 const favorites = (state = [], action) => {
   if (action.payload === 'ADD_FAVORITE') {
-    return [...state, action.payload]
-  } if (action.payload === 'DELETE_FAVORITE') {
-    return state.filter((favorite) => favorite.id !=action.payload.id);
-  } if (action.type === 'SET_FAVORITES') {
+    return [...state, action.payload];
+  }
+  if (action.payload === 'DELETE_FAVORITE') {
+    return state.filter((favorite) => favorite.id != action.payload.id);
+  }
+  if (action.type === 'SET_FAVORITES') {
     return action.payload;
   }
   return state;
-  }
+}
 
 const search = (state = [], action) => {
   if (action.type === 'SET_GIFS') {
@@ -118,7 +121,7 @@ const store = createStore(
     trending,
     favorites,
     search,
-    categories
+    categories,
   }),
   applyMiddleware(sagaMiddleware, logger)
 );
