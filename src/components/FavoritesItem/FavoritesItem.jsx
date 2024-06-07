@@ -7,18 +7,22 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 
 
 export default function FavoritesItem({favorite}) {
     const categories = useSelector(store => store.categories);
     const [selectCategory, setSelectCategory] = useState({});
-    console.log(favorite);
+    const dispatch = useDispatch();
 
     const handleChange = (event) => {
         console.log('change from dropdown', event.target.value);
         setSelectCategory(event.target.value);
+    }
+
+    const deleteFav = (favId) => {
+        dispatch({ type: 'DELETE_FAVORITE', payload: favId })
     }
     
     return (
@@ -33,12 +37,10 @@ export default function FavoritesItem({favorite}) {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small">Remove</Button>
+            <Button size="small" onClick={() => deleteFav(favorite.id)}>Delete</Button>
             <div id="dropdown">
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                placeholder='Category'
+            <Select
                 value={selectCategory}
                 label="Category"
                 onChange={handleChange}

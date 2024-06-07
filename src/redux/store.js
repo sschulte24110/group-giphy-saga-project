@@ -53,6 +53,7 @@ function* addFavoriteSaga(action) {
     alert(`Error deleting Favorite`);
     console.error(error);
   }
+}
   
 function* fetchFavorites() {
   try {
@@ -99,11 +100,11 @@ const favorites = (state = [], action) => {
     return [...state, action.payload]
   } if (action.payload === 'DELETE_FAVORITE') {
     return state.filter((favorite) => favorite.id !=action.payload.id);
-  if (action.type === 'SET_FAVORITES') {
+  } if (action.type === 'SET_FAVORITES') {
     return action.payload;
   }
   return state;
-};
+  }
 
 const search = (state = [], action) => {
   if (action.type === 'SET_GIFS') {
