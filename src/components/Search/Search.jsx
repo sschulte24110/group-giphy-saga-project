@@ -8,17 +8,11 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 
 export default function Search() {
   const dispatch = useDispatch();
   let [searchInput, setSearchInput] = useState('');
   const gifReturn = useSelector((store) => store.search);
-
-  // Do I need this
-  useEffect(() => {
-    dispatch({ type: 'FETCH_GIFS' });
-  }, []);
 
   const searchGifs = (event) => {
     dispatch({ type: 'FETCH_GIFS', payload: searchInput });
@@ -29,9 +23,11 @@ export default function Search() {
     setSearchInput(event.target.value);
   };
 
-  const favoriteGif = (gif_url) => {
-    dispatch({ type: 'ADD_FAVORITE', payload: gif_url})
+  const favoriteGif = (gifInfo) => {
+    dispatch({ type: 'ADD_FAVORITE', payload: {gif_name: gifInfo.title, gif_url: gifInfo.images.original.url }})
+    console.log('gif data', gifInfo);
   }
+
 
   return (
     <>
@@ -47,19 +43,8 @@ export default function Search() {
         <button type='submit'>Search</button>
       </form>
       <h4>Giphy Search</h4>
-
       {gifReturn.map((gif) => (
-        <div>
-          <h6>{gif.title}</h6>
-          <h6>{gif.url}</h6>
-          <img src={gif.images.original.url} />
-          <button onClick={() => {favoriteGif(gif.images.original.url)}} >Favorite</button>
-        </div>
-      ))}
-
-      {/* {gifReturn.map((gif) => (
-        <Grid>
-        <Card sx={{ maxWidth: 345}}>
+        <Card key={gif.id} sx={{ width: 300, height: 350}} id='card'>
           <CardMedia
           component='img'
           height='200'
@@ -72,11 +57,10 @@ export default function Search() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size='small'>Favorite</Button>
+            <Button onClick={() => {favoriteGif(gif)}} size='small'>Favorite</Button>
           </CardActions>
         </Card>
-        </Grid>
-      ))} */}
+      ))}
     </>
   );
 }

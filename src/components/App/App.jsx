@@ -4,6 +4,7 @@ import Search from '../Search/Search';
 import Favorites from '../Favorites/Favorites';
 import './app.css';
 
+
 function App() {
   return (
     <div>
@@ -17,10 +18,12 @@ function App() {
         <Route path='/search'>
           <Search />
         </Route>
+
         <Route
           exact
           path='/favorites'
         >
+
           <Favorites />
         </Route>
       </Router>
