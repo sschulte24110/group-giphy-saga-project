@@ -53,6 +53,7 @@ function* addFavoriteSaga(action) {
     alert(`Error deleting Favorite`);
     console.error(error);
   }
+}
   
 function* fetchFavorites() {
   try {
@@ -96,14 +97,16 @@ const trending = (state = [], action) => {
 // Did not add FETCH_FAVORITES since I did not know what Amber had completed.
 const favorites = (state = [], action) => {
   if (action.payload === 'ADD_FAVORITE') {
-    return [...state, action.payload]
-  } if (action.payload === 'DELETE_FAVORITE') {
-    return state.filter((favorite) => favorite.id !=action.payload.id);
+    return [...state, action.payload];
+  }
+  if (action.payload === 'DELETE_FAVORITE') {
+    return state.filter((favorite) => favorite.id != action.payload.id);
+  }
   if (action.type === 'SET_FAVORITES') {
     return action.payload;
   }
   return state;
-};
+}
 
 const search = (state = [], action) => {
   if (action.type === 'SET_GIFS') {
