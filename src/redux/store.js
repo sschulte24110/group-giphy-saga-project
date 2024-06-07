@@ -5,10 +5,6 @@ import logger from 'redux-logger';
 import axios from 'axios';
 
 
-
-
-
-
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
@@ -17,6 +13,17 @@ function* rootSaga() {
    yield takeLeading('FETCH_GIFS', fetchGifsSaga);
   yield takeLeading('ADD_FAVORITE', addFavoriteSaga);
   yield takeLeading('DELETE_FAVORITE', deleteFavoriteSaga);
+  yield takeLeading('GET_TRENDING', getTrending);
+}
+
+function* getTrending(action) {
+  try {
+    const result = yield axios.get('/api/trending');
+    console.log(result);
+    yield put({ type: 'SET_TRENDING', payload: result.data });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
   function* fetchGifsSaga(action) {
@@ -78,7 +85,12 @@ const categories = (state = [], action) => {
 }
 
 const trending = (state = [], action) => {
-  return state;
+  switch (action.type) {
+    case 'SET_TRENDING':
+      return action.payload;
+    default:
+      return state;
+  }
 };
 
 // Did not add FETCH_FAVORITES since I did not know what Amber had completed.

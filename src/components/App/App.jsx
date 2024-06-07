@@ -1,4 +1,7 @@
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
+import Trending from '../Trending/Trending';
+import Favorite from '../Favorites/Favorites';
+import Search from '../Search/Search';
 
 import Search from '../Search/Search';
 
@@ -16,7 +19,6 @@ function App() {
           exact
           path='/'
         >
-
           <Trending />
         </Route>
         <Route path='/search'>
